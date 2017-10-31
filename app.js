@@ -20,14 +20,16 @@ function salesPerHour(avgSales, custPerHour){
     return avgSales * custPerHour;
 };
 
-const pdxAirport = {
-    minCustomers: 23,
-    maxCustomers: 65,
-    avgSales: 6.3,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour,
-    render: render
+function Store(minCustomers, maxCustomers, avgSales, custPerHour, salesPerHour, render){
+    this.minCustomers = minCustomers;
+    this.maxCustomers = maxCustomers;
+    this.avgSales = avgSales;
+    this.custPerHour = custPerHour;
+    this.salesPerHour = salesPerHour;
+    this.render = render;
 };
+
+const pdxAirport = new Store()
 
 let cphAirport = [custPerHour(pdxAirport.minCustomers, pdxAirport.maxCustomers)];
 let sphAirport = [parseInt((pdxAirport.salesPerHour(pdxAirport.avgSales, cphAirport)))];
