@@ -14,14 +14,36 @@
         <h3>hello world</h3>
         <ul id='whatever'></ul>
     </div>
-    <table style="width:100%">
+    <table style="width:100%" id="myTable">
+        <tfoot id="tafoot"></tfoot>
         <tr id="firstLine"></tr>
         <tr id="secondLine"></tr>
         <tr id="thirdLine"></tr>
         <tr id="fourthLine"></tr>
         <tr id="fifthLine"></tr>
         <tr id="sixthLine"></tr>
+        <tr id="seventhLine"></tr>
     </table>
+    <section id="inputter">
+        <form id="new-store">
+            <fieldset>
+                <legend>Add a new store</legend>
+                
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="name" required>
+
+                <label for="minCustomers">Minimum cph</label>
+                <input for="minCustomers" id="minCustomers" type="number" placeholder="Minimum customers per hour" required>
+
+                <label for="maxCustomers">Maximum cph</label>
+                <input for="maxCustomers" id="maxCustomers" type="number" placeholder="Maximum customers per hour">
+
+                <label for="avgSales">Avg. spc</label>
+                <input for="avgSales" id="avgSales" type="float" placeholder="Average sales per customer">
+                <button type="submit">ADD</button>
+            </fieldset>
+        </form>
+    </section>
 </body>
     <script src="app.js"></script>
 </html>

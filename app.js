@@ -5,23 +5,35 @@ const hours = [ '', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '
     '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
 // function to render time values in html
-Store.prototype.renderHours = function(n){
+function renderHours(n){
     const hrs = document.getElementById('firstLine');
     const td = document.createElement('td');
     td.textContent = hours[n];
     hrs.appendChild(td);
 };
 
+function renderTotals(){
+    const tableRowTwo = document.getElementById('tafoot');
+    const tr = document.createElement('tr');
+    tableRowTwo.appendChild(tr);
+    for(let i = 0; i < hours.length; i++){
+        const td = document.createElement('td');
+        td.textContent = totalsArrayTwo[i];
+        tr.appendChild(td);
+    }
+}
+
 // function to render sales in a grid
-Store.prototype.render = function(parent, sph){
-    const tr = document.getElementById(parent);
+Store.prototype.render = function(sph){
+    const tableRow = document.getElementById('myTable');
+    const tr = document.createElement('tr');
+    tableRow.appendChild(tr);
     let td = document.createElement('td');
     td.textContent = this.name;
     tr.appendChild(td);
 
     for(let j = 0; j < hours.length - 1; j++){
         td = document.createElement('td');
-        console.log(this.name);
         td.textContent = sph[j];
         tr.appendChild(td);
     }
@@ -55,23 +67,45 @@ const pioneerSq = new Store('Pioneer Square', 3, 24, 1.2, custPerHour, salesPerH
 const powells = new Store('Powell\'s', 11, 38, 3.7, custPerHour, salesPerHour);
 const stJohns = new Store('St. Johns', 20, 28, 2.3, custPerHour, salesPerHour);
 const waterfront = new Store('Waterfront', 2, 16, 4.6, custPerHour, salesPerHour);
+const tester = new Store('tester', 34, 38, 2, custPerHour, salesPerHour);
 
 // function to store sales per hour and call render for each store
+const totalsArrayTwo = [];
 function calculateCookies(object, line){
     const array = [];
     for(let i = 0; i < hours.length; i++){
         const cph = custPerHour(object.minCustomers, object.maxCustomers);
         const sph = object.salesPerHour(object.avgSales, cph);
         array.push(sph);
+        totalsArrayTwo[i] = (totalsArrayTwo[i] || 0) + sph;
     };
-    object.render(line, array);
+    object.render(array, line);
     console.log(array);
+    console.log(totalsArrayTwo);
+    
+    renderTotals();
 }
 
 // call to render hours
 for(let i = 0; i < 16; i++){
-    Store.prototype.renderHours(i);
+    renderHours(i);
 }
+
+// creates new store using form inputs
+const form = document.getElementById('new-store');
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const minCustomers = document.getElementById('minCustomers').value;
+    const maxCustomers = document.getElementById('maxCustomers').value;
+    const avgSales = document.getElementById('avgSales').value;
+
+    const newStore = new Store(name, minCustomers, maxCustomers, avgSales, custPerHour, salesPerHour);
+
+    console.log(newStore);
+    calculateCookies(newStore, 'eigthline');
+});
 
 // calls to run functions on each store
 calculateCookies(pdxAirport, 'secondLine');
@@ -79,3 +113,7 @@ calculateCookies(pioneerSq, 'thirdLine');
 calculateCookies(powells, 'fourthLine');
 calculateCookies(stJohns, 'fifthLine');
 calculateCookies(waterfront, 'sixthLine');
+calculateCookies(tester, 'seventhLine');
+
+//renderTotals();
+console.log(totalsArrayTwo);
