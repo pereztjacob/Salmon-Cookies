@@ -1,5 +1,5 @@
 'use strict';
-
+//
 // variable storing number of stores built
 let x = 0;
 
@@ -15,6 +15,7 @@ function renderHours(n){
     hrs.appendChild(td);
 };
 
+// function to add totals to table footer
 function renderTotals(){
     const tableRowTwo = document.getElementById('tafoot');
     const tr = document.createElement('tr');
@@ -73,7 +74,6 @@ const pioneerSq = new Store('Pioneer Square', 3, 24, 1.2, custPerHour, salesPerH
 const powells = new Store('Powell\'s', 11, 38, 3.7, custPerHour, salesPerHour);
 const stJohns = new Store('St. Johns', 20, 28, 2.3, custPerHour, salesPerHour);
 const waterfront = new Store('Waterfront', 2, 16, 4.6, custPerHour, salesPerHour);
-// const tester = new Store('tester', 34, 38, 2, custPerHour, salesPerHour);
 
 // function to store sales per hour and call render for each store
 const totalsArrayTwo = [];
@@ -126,7 +126,5 @@ calculateCookies(pioneerSq, 'thirdLine');
 calculateCookies(powells, 'fourthLine');
 calculateCookies(stJohns, 'fifthLine');
 calculateCookies(waterfront, 'sixthLine');
-// calculateCookies(tester, 'seventhLine');
 
-//renderTotals();
 console.log(totalsArrayTwo);
