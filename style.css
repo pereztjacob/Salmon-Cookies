@@ -1,0 +1,46 @@
+body{
+    background-image: url("salmonCookiesBackground.png"); 
+}
+h1{
+    text-align: center;
+    font-family: 'times new roman';
+    margin: 3%;
+}
+td{
+    font-family: monospace;
+    text-align: center;
+    padding: 5px;
+}
+table{
+    margin-left: 10%;
+    padding: 3% !important;
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+table tr td{
+    vertical-align: middle;
+    padding: 1.5%;
+}
+tfoot{
+    background-color: rgba(246, 246, 246, 0.9);
+}
+table thead td{
+    padding: 2%;
+}
+thead{
+    background-color: rgba(246, 246, 246, 0.9);
+}
+form{
+    width: 20%;
+    margin-left: 40%;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+input{
+    width: 100%;
+    margin: 2%;
+}
+button{
+    margin-left: 47%;
+}

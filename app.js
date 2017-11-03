@@ -1,5 +1,8 @@
 'use strict';
 
+// variable storing number of stores built
+let x = 0;
+
 // array storing time values
 const hours = [ '', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm',
     '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
@@ -16,8 +19,11 @@ function renderTotals(){
     const tableRowTwo = document.getElementById('tafoot');
     const tr = document.createElement('tr');
     tableRowTwo.appendChild(tr);
-    for(let i = 0; i < hours.length; i++){
-        const td = document.createElement('td');
+    let td = document.createElement('td');
+    td.textContent = 'TOTAL';
+    tr.appendChild(td);
+    for(let i = 0; i < hours.length - 1; i++){
+        td = document.createElement('td');
         td.textContent = totalsArrayTwo[i];
         tr.appendChild(td);
     }
@@ -67,7 +73,7 @@ const pioneerSq = new Store('Pioneer Square', 3, 24, 1.2, custPerHour, salesPerH
 const powells = new Store('Powell\'s', 11, 38, 3.7, custPerHour, salesPerHour);
 const stJohns = new Store('St. Johns', 20, 28, 2.3, custPerHour, salesPerHour);
 const waterfront = new Store('Waterfront', 2, 16, 4.6, custPerHour, salesPerHour);
-const tester = new Store('tester', 34, 38, 2, custPerHour, salesPerHour);
+// const tester = new Store('tester', 34, 38, 2, custPerHour, salesPerHour);
 
 // function to store sales per hour and call render for each store
 const totalsArrayTwo = [];
@@ -82,8 +88,15 @@ function calculateCookies(object, line){
     object.render(array, line);
     console.log(array);
     console.log(totalsArrayTwo);
-    
+
     renderTotals();
+    x++;
+    console.log(x);
+    if(x > 3){
+        document.getElementById('tafoot').deleteRow(0);
+        document.getElementById('tafoot').deleteRow(1);
+        document.getElementById('tafoot').deleteRow(x - x + 1);
+    }
 }
 
 // call to render hours
@@ -113,7 +126,7 @@ calculateCookies(pioneerSq, 'thirdLine');
 calculateCookies(powells, 'fourthLine');
 calculateCookies(stJohns, 'fifthLine');
 calculateCookies(waterfront, 'sixthLine');
-calculateCookies(tester, 'seventhLine');
+// calculateCookies(tester, 'seventhLine');
 
 //renderTotals();
 console.log(totalsArrayTwo);
