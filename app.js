@@ -1,121 +1,130 @@
 'use strict';
+//
+// variable storing number of stores built
+let x = 0;
 
- const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm',
-        '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+// array storing time values
+const hours = [ '', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm',
+    '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-function render(n){
-    const ul = document.getElementById('whatever');
-    const li = document.createElement('li');
-    li.textContent = hours[n] + ': ' + sphAirport[n + 1] + ' cookies';
-    ul.appendChild(li);
+// function to render time values in html
+function renderHours(n){
+    const hrs = document.getElementById('firstLine');
+    const td = document.createElement('td');
+    td.textContent = hours[n];
+    hrs.appendChild(td);
+};
+
+// function to add totals to table footer
+function renderTotals(){
+    const tableRowTwo = document.getElementById('tafoot');
+    const tr = document.createElement('tr');
+    tableRowTwo.appendChild(tr);
+    let td = document.createElement('td');
+    td.textContent = 'TOTAL';
+    tr.appendChild(td);
+    for(let i = 0; i < hours.length - 1; i++){
+        td = document.createElement('td');
+        td.textContent = totalsArrayTwo[i];
+        tr.appendChild(td);
+    }
 }
 
+// function to render sales in a grid
+Store.prototype.render = function(sph){
+    const tableRow = document.getElementById('myTable');
+    const tr = document.createElement('tr');
+    tableRow.appendChild(tr);
+    let td = document.createElement('td');
+    td.textContent = this.name;
+    tr.appendChild(td);
+
+    for(let j = 0; j < hours.length - 1; j++){
+        td = document.createElement('td');
+        td.textContent = sph[j];
+        tr.appendChild(td);
+    }
+};
+
+// function to generate a random value for customers per hour
 function custPerHour(minCustomers, maxCustomers){
     minCustomers = Math.ceil(minCustomers);
     maxCustomers = Math.floor(maxCustomers);
     return Math.floor(Math.random() * (maxCustomers - minCustomers + 1)) + minCustomers; 
 };
 
+// function to calculate sales per hour
 function salesPerHour(avgSales, custPerHour){
-    return avgSales * custPerHour;
+    return Math.floor(avgSales * custPerHour);
 };
 
-const pdxAirport = {
-    minCustomers: 23,
-    maxCustomers: 65,
-    avgSales: 6.3,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour,
-    render: render
+// constructor function to make stores
+function Store(name, minCustomers, maxCustomers, avgSales, custPerHour, salesPerHour){
+    this.name = name;
+    this.minCustomers = minCustomers;
+    this.maxCustomers = maxCustomers;
+    this.avgSales = avgSales;
+    this.custPerHour = custPerHour;
+    this.salesPerHour = salesPerHour;
 };
 
-let cphAirport = [custPerHour(pdxAirport.minCustomers, pdxAirport.maxCustomers)];
-let sphAirport = [parseInt((pdxAirport.salesPerHour(pdxAirport.avgSales, cphAirport)))];
-for(let i = 0; i < 14; i++){
-    cphAirport.push(custPerHour(pdxAirport.minCustomers, pdxAirport.maxCustomers));
-};
-console.log(cphAirport);
-for(let n = 0; n < 14; n++){
-    sphAirport.push(parseInt(salesPerHour(pdxAirport.avgSales, cphAirport[n])));
-    render(n);
-};
-console.log(sphAirport);
+// stores used
+const pdxAirport = new Store('pdxAirport', 23, 65, 6.3, custPerHour, salesPerHour);
+const pioneerSq = new Store('Pioneer Square', 3, 24, 1.2, custPerHour, salesPerHour);
+const powells = new Store('Powell\'s', 11, 38, 3.7, custPerHour, salesPerHour);
+const stJohns = new Store('St. Johns', 20, 28, 2.3, custPerHour, salesPerHour);
+const waterfront = new Store('Waterfront', 2, 16, 4.6, custPerHour, salesPerHour);
 
-const pioneerSq = {
-    minCustomers: 3,
-    maxCustomers: 24,
-    avgSales: 1.2,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour
-};
+// function to store sales per hour and call render for each store
+const totalsArrayTwo = [];
+function calculateCookies(object, line){
+    const array = [];
+    for(let i = 0; i < hours.length; i++){
+        const cph = custPerHour(object.minCustomers, object.maxCustomers);
+        const sph = object.salesPerHour(object.avgSales, cph);
+        array.push(sph);
+        totalsArrayTwo[i] = (totalsArrayTwo[i] || 0) + sph;
+    };
+    object.render(array, line);
+    console.log(array);
+    console.log(totalsArrayTwo);
 
-let cphPioneer = [custPerHour(pioneerSq.minCustomers, pioneerSq.maxCustomers)];
-let sphPioneer = [parseInt((pioneerSq.salesPerHour(pioneerSq.avgSales, cphPioneer)))];
-for(let i = 1; i < 14; i++){
-    cphPioneer.push(custPerHour(pioneerSq.minCustomers, pioneerSq.maxCustomers));
-};
-console.log(cphAirport);
-for(let n = 1; n < 14; n++){
-    sphPioneer.push(parseInt(salesPerHour(pioneerSq.avgSales, cphAirport[n])));
-};
-console.log(sphPioneer);
+    renderTotals();
+    x++;
+    console.log(x);
+    if(x > 3){
+        document.getElementById('tafoot').deleteRow(0);
+        document.getElementById('tafoot').deleteRow(1);
+        document.getElementById('tafoot').deleteRow(x - x + 1);
+    }
+}
 
-const powells = {
-    minCustomers: 11,
-    maxCustomers: 38,
-    avgSales: 3.7,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour
-};
+// call to render hours
+for(let i = 0; i < 16; i++){
+    renderHours(i);
+}
 
-let cphPowells = [custPerHour(powells.minCustomers, powells.maxCustomers)];
-let sphPowells = [parseInt((powells.salesPerHour(powells.avgSales, cphPowells)))];
-for(let i = 1; i < 14; i++){
-    cphPowells.push(custPerHour(powells.minCustomers, powells.maxCustomers));
-};
-console.log(cphPowells);
-for(let n = 1; n < 14; n++){
-    sphPowells.push(parseInt(salesPerHour(powells.avgSales, cphPowells[n])));
-};
-console.log(sphPowells);
+// creates new store using form inputs
+const form = document.getElementById('new-store');
+form.addEventListener('submit', function(e){
+    e.preventDefault();
 
-const stJohns = {
-    minCustomers: 20,
-    maxCustomers: 38,
-    avgSales: 2.3,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour
-};
+    const name = document.getElementById('name').value;
+    const minCustomers = document.getElementById('minCustomers').value;
+    const maxCustomers = document.getElementById('maxCustomers').value;
+    const avgSales = document.getElementById('avgSales').value;
 
-let cphStJohns = [custPerHour(stJohns.minCustomers, stJohns.maxCustomers)];
-let sphStJohns = [parseInt((stJohns.salesPerHour(stJohns.avgSales, cphStJohns)))];
-for(let i = 1; i < 14; i++){
-    cphStJohns.push(custPerHour(stJohns.minCustomers, stJohns.maxCustomers));
-};
-console.log(cphStJohns);
-for(let n = 1; n < 14; n++){
-    sphStJohns.push(parseInt(salesPerHour(stJohns.avgSales, cphStJohns[n])));
-};
-console.log(sphStJohns);
+    const newStore = new Store(name, minCustomers, maxCustomers, avgSales, custPerHour, salesPerHour);
 
-const waterfront = {
-    minCustomers: 2,
-    maxCustomers: 16,
-    avgSales: 4.6,
-    custPerHour: custPerHour,
-    salesPerHour: salesPerHour
-};
+    console.log(newStore);
+    calculateCookies(newStore, 'eigthline');
+});
 
-let cphWaterfront = [custPerHour(waterfront.minCustomers, waterfront.maxCustomers)];
-let sphWaterfront = [parseInt((waterfront.salesPerHour(waterfront.avgSales, cphWaterfront)))];
-for(let i = 1; i < 14; i++){
-    cphWaterfront.push(custPerHour(waterfront.minCustomers, waterfront.maxCustomers));
-};
-console.log(cphWaterfront);
-for(let n = 1; n < 14; n++){
-    sphWaterfront.push(parseInt(salesPerHour(waterfront.avgSales, cphWaterfront[n])));
-};
-console.log(sphWaterfront);
+// calls to run functions on each store
+calculateCookies(pdxAirport, 'secondLine');
+calculateCookies(pioneerSq, 'thirdLine');
+calculateCookies(powells, 'fourthLine');
+calculateCookies(stJohns, 'fifthLine');
+calculateCookies(waterfront, 'sixthLine');
 
-
-
+console.log(totalsArrayTwo);

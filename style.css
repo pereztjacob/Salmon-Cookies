@@ -1,0 +1,92 @@
+body{
+    background-image: url("salmonCookiesBackground.png");
+}
+h1{
+    text-align: center;
+    font-family: 'times new roman';
+    margin: 3%;
+    color: rgba(143, 24, 91, 1.0);
+    font-size: 60px;
+    background-color: rgba(255, 254, 247, 0.8); 
+}
+td{
+    font-family: monospace;
+    text-align: center;
+    padding: 5px;
+}
+table{
+    margin-left: 5%;
+    border: 1px solid black;
+    border-radius: 3px;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+table tr td{
+    vertical-align: middle;
+    padding: 1.5%;
+}
+tfoot{
+    background-color: rgba(246, 246, 246, 0.9);
+}
+table thead td{
+    padding: 2%;
+}
+thead{
+    background-color: rgba(246, 246, 246, 0.9);
+}
+form{
+    position: absolute;
+    width: 20%;
+    margin-left: 70%;
+    background-color: rgba(255, 255, 255, 0.85);
+    margin-top: -20%;
+}
+input{
+    width: 100%;
+    margin: 2%;
+}
+button{
+    margin-left: 40%;
+}
+.main{
+    background-color: rgba(255, 254, 247, 0.8);
+    border-radius: 5px;
+    width: 40%;
+    margin-left: 20%;
+    text-align: center;
+    padding: 2% 10%;
+    line-height: 25px;
+    color: rgba(143, 24, 91, 0.8);
+}
+.main h2{
+    font-size: 40px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+.main h5{
+    font-size: 20px;
+}
+.main p{
+    font-size: 16px;
+    width: 70%;
+    margin-left: 15%;
+}
+li{
+    display: inline;
+    margin: 2%;
+    font-family: 'Times New Roman';
+}
+a{
+    text-decoration: none;
+    font-size: 24px;
+    color: rgba(143, 24, 91, 0.8);
+}
+ul{
+    margin-left: 70%;
+}
+nav{
+    background-color: rgba(255, 254, 247, 0.8)
+}
+nav:active{
+    background-color: rgba(181, 117, 255, 0.651)
+}
